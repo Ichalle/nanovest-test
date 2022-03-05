@@ -12,14 +12,18 @@ import Colors from '../constants/Colors';
 import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
 import { Coins } from '../interfaces'
+import { useNavigation } from '@react-navigation/native';
 
-type Props = {
-  res?: Coins[]
-}
 
 const Item = ({ data }: { data: Coins }) => {
+  const navigation = useNavigation()
   return (
-    <TouchableOpacity style={{marginBottom: 30}}>
+    <TouchableOpacity
+      style={{marginBottom: 30}}
+      onPress={() => {
+        navigation.navigate<any>('CoinDetail', { ...data } )
+      }}
+    >
       <Image
         style={{width: 50, height: 50}}
         source={{uri:data.icon_url}}
@@ -41,8 +45,13 @@ const CoinList = () => {
     setKey('1935fb1087e519cd0092976a6c34426d')
     const getData = async () => {
       try {
-        const res = await services.getCoins(key)
-        setData(Object.values(res.crypto))
+        await services.getCoins(key).then((resp) => {
+          if (resp && resp.crypto) {
+            setData(Object.values(resp.crypto))
+          } else {
+            setData([])
+          }
+        })
       } catch (e) {
         console.log(e)
       }
