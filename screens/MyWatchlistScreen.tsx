@@ -1,14 +1,30 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextInput , Button} from 'react-native';
+import { useState } from 'react';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-export default function MyWatchListScreen() {
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { removeWatchlist } from "../redux/watchlistReducer";
+
+
+const MyWatchListScreen = () => {
+  const dataWatchlist = useSelector((state: RootState) => state);
+  const dispatch = useDispatch<AppDispatch>();
+  console.log(dataWatchlist, 'datawatchlists,,,,,')
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/MyWatchListScreen.tsx" />
+      {dataWatchlist.map((item, index) => (
+        <View key={index}>
+          <Text>{item.name}</Text>
+          <Button
+            title='delete'
+            onPress={() => {
+              dispatch(removeWatchlist(item.name))
+            }}
+          />
+        </View>
+      ))}
     </View>
   );
 }
@@ -29,3 +45,5 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+export default MyWatchListScreen;

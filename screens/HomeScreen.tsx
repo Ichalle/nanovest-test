@@ -2,9 +2,8 @@ import { StyleSheet } from 'react-native';
 
 import ListCoin from '../components/ListCoin'
 import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
 
-const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
+const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>List Coin</Text>

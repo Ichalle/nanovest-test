@@ -1,12 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, Image } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
+import { useEffect } from 'react';
+import { StyleSheet, Image } from 'react-native';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
+import { addWatchlist } from "../redux/watchlistReducer";
 import { Text, View } from '../components/Themed';
-import { Coins } from '../interfaces'
 
 const CoinDetailScreen = ({ route, navigation }: any) => {
   const data = route.params
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(addWatchlist(data));
+  })
+
   return (
     <View style={styles.container}>
       <Image
