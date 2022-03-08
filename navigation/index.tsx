@@ -16,8 +16,9 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MyWatchListScreen from '../screens/MyWatchListScreen';
 import CoinDetailScreen from '../screens/CoinDetailScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -63,9 +64,9 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+        options={() => ({
           title: 'List Coin',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />
+          tabBarIcon: () => <TabBarIcon name="coins" />
         })}
       />
       <BottomTab.Screen
@@ -73,7 +74,7 @@ function BottomTabNavigator() {
         component={MyWatchListScreen}
         options={{
           title: 'My Watchlist',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: () => <TabBarIcon name="clipboard-list"/>,
         }}
       />
     </BottomTab.Navigator>
@@ -84,8 +85,7 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
+  name: string
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome5 name={props.name} size={24} color="black" />;
 }
