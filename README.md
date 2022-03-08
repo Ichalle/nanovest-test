@@ -2,9 +2,9 @@ Coin Watchlist App
 
 This project using React Native Expo.
 
-› Tab 1: List coins
-› Tab 2: Watchlist
-› Detail Coins open when tap coin on List Coin page
+Tab 1: List coins
+Tab 2: Watchlist
+Detail Coins open when tap coin on List Coin page
 
 In the project, after clone this repository you can run:
 
