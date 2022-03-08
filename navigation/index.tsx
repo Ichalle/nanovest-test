@@ -12,13 +12,13 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MyWatchListScreen from '../screens/MyWatchListScreen';
 import CoinDetailScreen from '../screens/CoinDetailScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -42,9 +42,6 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="CoinDetail" component={CoinDetailScreen} options={{ title: 'CoinDetail' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -67,23 +64,9 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+        options={() => ({
           title: 'List Coin',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
+          tabBarIcon: () => <TabBarIcon name="coins" />
         })}
       />
       <BottomTab.Screen
@@ -91,7 +74,7 @@ function BottomTabNavigator() {
         component={MyWatchListScreen}
         options={{
           title: 'My Watchlist',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: () => <TabBarIcon name="clipboard-list"/>,
         }}
       />
     </BottomTab.Navigator>
@@ -102,8 +85,7 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
+  name: string
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome5 name={props.name} size={24} color="black" />;
 }
